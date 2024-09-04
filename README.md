@@ -1,3 +1,3 @@
-#integrantes
-*Nicolás Palma
-*Miguel Montenegro
+# integrantes
+* Nicolás Palma
+* Miguel Montenegro
