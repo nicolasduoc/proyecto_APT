@@ -1,0 +1,13 @@
+<<<<<<<<<<<<<<  ✨ Codeium Command ⭐  >>>>>>>>>>>>>>>>
+npm init -y
+npm install express mysql2
+npx create-react-app frontend
+cd frontend & npm install & cd ..
+mkdir backend & cd backend
+npm init -y
+npm install express mysql2
+mkdir models controllers routes
+touch app.js
+touch config.js
+cd ../frontend & npm start
+<<<<<<<  d2016cbb-3139-4702-b15b-6b5c80c685b8  >>>>>>>
