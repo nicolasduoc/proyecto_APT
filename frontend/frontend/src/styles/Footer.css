@@ -1,0 +1,25 @@
+html, body {
+    height: 100%;  /* Asegura que el cuerpo ocupe toda la altura */
+    margin: 0;
+  }
+  
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa; /* Fondo gris claro, puedes cambiarlo */
+    text-align: center;
+    padding: 10px 0;
+    color: black;  /* Cambia el color del texto a negro */
+  }
+  
+  .container {
+    min-height: 100%; /* Asegura que el contenedor principal tenga al menos el 100% de la altura */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .content {
+    flex: 1; /* El contenido ocupa el espacio restante antes del footer */
+  }
+  

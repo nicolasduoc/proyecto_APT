@@ -13,7 +13,8 @@ const Navbar = () => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="logo">EarthAlert</div>
+<div className="logo" style={{ color: '#623d6c', fontWeight: 'bold' }}>EarthAlert</div>
+
       <button
         className="navbar-toggler"
         type="button"
@@ -39,10 +40,10 @@ const Navbar = () => {
             <a className="nav-link" href="/historico">Sismos historicos</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#profile">Mapa Tectonico</a>
+            <a className="nav-link" href="/mapa">Mapa Tectonico</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#profile">Consejos de Seguridad</a>
+            <a className="nav-link" href="/consejos">Consejos de Seguridad</a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="#profile">Mi Perfil</a>

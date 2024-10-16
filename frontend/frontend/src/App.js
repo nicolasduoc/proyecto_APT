@@ -9,6 +9,10 @@ import Inicio from './components/Inicio';
 import Sismos from './components/Sismos';
 
 import Historico from './components/historico';
+import Mapa from './components/mapa';
+import Consejos from './components/Consejos.js';  // Importa tu componente  
+
+import Footer from './components/Footer';
 
 
 
@@ -25,9 +29,15 @@ function App() {
         <Route path="/pagina-despues-del-login" element={<ProtectedRoute element={<PaginaDespuesDelLogin />} />} /> {/* Protege esta ruta */}
         <Route path="/Sismos" element={<ProtectedRoute element={<Sismos/>} />} />
         <Route path="/historico" element={<Historico />} />
+        <Route path="/mapa" element={<Mapa />} />
+        <Route path="/consejos" element={<Consejos />} />
 
 
       </Routes>
+
+   
+
+
     </Router>
   );
 }

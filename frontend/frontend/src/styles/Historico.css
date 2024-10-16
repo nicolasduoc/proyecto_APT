@@ -1,0 +1,41 @@
+.map-container {
+    height: 400px;
+    margin-bottom: 20px;
+  }
+  
+  .custom-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .legend-color {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    margin-right: 5px;
+  }
+  .side-menu {
+    position: fixed;
+    top: 0;
+    left: -300px; /* Oculto fuera de la pantalla */
+    width: 300px;
+    height: 100%;
+    background: white;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .side-menu.open {
+    left: 0; /* Despliega el menú */
+  }
+  
+  .menu-content {
+    padding: 20px;
+  }
+  
+  .menu-content button {
+    margin-bottom: 20px;
+  }
+  

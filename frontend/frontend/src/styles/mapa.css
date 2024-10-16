@@ -1,0 +1,21 @@
+.info-panel {
+    width: 20%; /* Ajusta el ancho según sea necesario */
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8); /* Blanco semi-transparente */
+    border-left: 2px solid #ccc;
+    position: relative;
+    height: 100vh; /* Altura completa del viewport */
+    overflow-y: auto; /* Desplazamiento si el contenido excede */
+  }
+  /* mapa.css */
+.leaflet-tooltip {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.leaflet-popup {
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 2px solid #007BFF;
+  border-radius: 5px;
+}
