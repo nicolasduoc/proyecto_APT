@@ -10,6 +10,7 @@ router.get('/', (req, res) => {
       console.error('Error al obtener los sismos:', err);
       return res.status(500).send('Error interno del servidor');
     }
+    console.log(results);
     res.json(results); // Devuelve los resultados como JSON
   });
 });
