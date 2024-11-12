@@ -28,7 +28,7 @@ export default function Map() {
         initialRegion={{
           latitude: -35.6751, // Central Chile
           // eslint-disable-next-line prettier/prettier
-          longitude: -71.5430, // Central Chile
+          longitude: -71.543, // Central Chile
           latitudeDelta: 10, // Increase to show a larger area
           longitudeDelta: 10, // Increase to show a larger area
         }}
