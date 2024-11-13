@@ -1,53 +1,29 @@
-import React, { useState } from 'react';
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const db = require('../config/db'); // Ajusta la ruta según donde tengas db.js
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+const router = express.Router();
 
-  const handleLogin = () => {
-    fetch('http://localhost:5000/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          localStorage.setItem('id_user', data.id_user); // Almacena id_user en localStorage
-          setError('');
-          // Redirigir a la página de creación de alerta o realizar otra acción
-        } else {
-          setError('Credenciales inválidas');
-        }
-      })
-      .catch((err) => {
-        setError('Error al comunicarse con el servidor');
-        console.error('Error:', err);
-      });
-  };
+// Ruta para el inicio de sesión
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
 
-  return (
-    <div>
-      <h2>Inicio de Sesión</h2>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Contraseña"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Iniciar Sesión</button>
-    </div>
-  );
-};
+  try {
+    const [user] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
 
-export default Login;
+    if (user && bcrypt.compareSync(password, user.password)) {
+      const id_user = user.id_user;
+      const token = jwt.sign({ id_user }, 'tu_secreto', { expiresIn: '1h' });
+
+      res.json({ success: true, id_user, token });
+    } else {
+      res.status(401).json({ success: false, message: 'Credenciales inválidas' });
+    }
+  } catch (error) {
+    console.error('Error en el inicio de sesión:', error);
+    res.status(500).json({ success: false, message: 'Error del servidor' });
+  }
+});
+
+module.exports = router;
