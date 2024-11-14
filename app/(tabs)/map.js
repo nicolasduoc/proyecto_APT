@@ -7,161 +7,94 @@ import { Ionicons } from "@expo/vector-icons";
 const mapStyle = [
   {
     elementType: "geometry",
-    stylers: [
-      {
-        color: "#f5f5f5",
-      },
-    ],
+    stylers: [{ color: "#e5e5e5" }],
   },
   {
     elementType: "labels.icon",
-    stylers: [
-      {
-        visibility: "off",
-      },
-    ],
+    stylers: [{ visibility: "off" }],
   },
   {
     elementType: "labels.text.fill",
-    stylers: [
-      {
-        color: "#616161",
-      },
-    ],
+    stylers: [{ color: "#616161" }],
   },
   {
     elementType: "labels.text.stroke",
-    stylers: [
-      {
-        color: "#f5f5f5",
-      },
-    ],
+    stylers: [{ color: "#f5f5f5" }],
   },
   {
-    featureType: "administrative.land_parcel",
+    featureType: "administrative.country",
+    elementType: "geometry.stroke",
+    stylers: [{ color: "#8b4513" }, { weight: 1.5 }],
+  },
+  {
+    featureType: "administrative.province",
+    elementType: "geometry.stroke",
+    stylers: [{ color: "#8b4513" }, { weight: 1 }],
+  },
+  {
+    featureType: "administrative.locality",
     elementType: "labels.text.fill",
-    stylers: [
-      {
-        color: "#bdbdbd",
-      },
-    ],
+    stylers: [{ color: "#3d3d3d" }],
+  },
+  {
+    featureType: "landscape",
+    elementType: "geometry",
+    stylers: [{ color: "#c5e8c5" }],
   },
   {
     featureType: "poi",
     elementType: "geometry",
-    stylers: [
-      {
-        color: "#eeeeee",
-      },
-    ],
-  },
-  {
-    featureType: "poi",
-    elementType: "labels.text.fill",
-    stylers: [
-      {
-        color: "#757575",
-      },
-    ],
+    stylers: [{ color: "#a0d6a0" }],
   },
   {
     featureType: "poi.park",
     elementType: "geometry",
-    stylers: [
-      {
-        color: "#e5e5e5",
-      },
-    ],
-  },
-  {
-    featureType: "poi.park",
-    elementType: "labels.text.fill",
-    stylers: [
-      {
-        color: "#9e9e9e",
-      },
-    ],
+    stylers: [{ color: "#7fbf7f" }],
   },
   {
     featureType: "road",
     elementType: "geometry",
-    stylers: [
-      {
-        color: "#ffffff",
-      },
-    ],
+    stylers: [{ color: "#ffffff" }],
   },
   {
     featureType: "road.arterial",
     elementType: "labels.text.fill",
-    stylers: [
-      {
-        color: "#757575",
-      },
-    ],
+    stylers: [{ color: "#757575" }],
   },
   {
     featureType: "road.highway",
     elementType: "geometry",
-    stylers: [
-      {
-        color: "#dadada",
-      },
-    ],
+    stylers: [{ color: "#dadada" }],
   },
   {
     featureType: "road.highway",
     elementType: "labels.text.fill",
-    stylers: [
-      {
-        color: "#616161",
-      },
-    ],
+    stylers: [{ color: "#616161" }],
   },
   {
     featureType: "road.local",
     elementType: "labels.text.fill",
-    stylers: [
-      {
-        color: "#9e9e9e",
-      },
-    ],
+    stylers: [{ color: "#9e9e9e" }],
   },
   {
     featureType: "transit.line",
     elementType: "geometry",
-    stylers: [
-      {
-        color: "#e5e5e5",
-      },
-    ],
+    stylers: [{ color: "#e5e5e5" }],
   },
   {
     featureType: "transit.station",
     elementType: "geometry",
-    stylers: [
-      {
-        color: "#eeeeee",
-      },
-    ],
+    stylers: [{ color: "#eeeeee" }],
   },
   {
     featureType: "water",
     elementType: "geometry",
-    stylers: [
-      {
-        color: "#c9c9c9",
-      },
-    ],
+    stylers: [{ color: "#b3d4fc" }],
   },
   {
     featureType: "water",
     elementType: "labels.text.fill",
-    stylers: [
-      {
-        color: "#9e9e9e",
-      },
-    ],
+    stylers: [{ color: "#9e9e9e" }],
   },
 ];
 
@@ -185,7 +118,6 @@ export default function Map() {
       } else {
         setError("No se pudieron obtener los datos de sismos recientes");
       }
-      // eslint-disable-next-line no-unused-vars
     } catch (error) {
       setError("Error al cargar los datos de sismos");
     } finally {

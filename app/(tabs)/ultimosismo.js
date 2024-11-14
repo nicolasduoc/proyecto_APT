@@ -40,9 +40,9 @@ const UltimoSismo = () => {
 
   if (loading) {
     return (
-      <View style={tw`flex-1 justify-center items-center bg-gray-900`}>
+      <View className="flex-1 justify-center items-center bg-gray-900">
         <ActivityIndicator size="large" color="#60A5FA" />
-        <Text style={tw`mt-4 text-lg font-semibold text-gray-300`}>
+        <Text className="mt-4 text-lg font-semibold text-gray-300">
           Cargando datos del último sismo...
         </Text>
       </View>
@@ -51,16 +51,16 @@ const UltimoSismo = () => {
 
   if (error) {
     return (
-      <View style={tw`flex-1 justify-center items-center p-4 bg-gray-900`}>
+      <View className="flex-1 justify-center items-center p-4 bg-gray-900">
         <Ionicons name="alert-circle-outline" size={64} color="#EF4444" />
-        <Text style={tw`mt-4 text-lg font-semibold text-center text-gray-300`}>
+        <Text className="mt-4 text-lg font-semibold text-center text-gray-300">
           {error}
         </Text>
         <TouchableOpacity
-          style={tw`mt-4 bg-blue-600 py-2 px-4 rounded-full`}
+          className="mt-4 bg-blue-600 py-2 px-4 rounded-full"
           onPress={fetchEarthquakeData}
         >
-          <Text style={tw`text-white font-semibold`}>Intentar de nuevo</Text>
+          <Text className="text-white font-semibold">Intentar de nuevo</Text>
         </TouchableOpacity>
       </View>
     );
@@ -68,137 +68,141 @@ const UltimoSismo = () => {
 
   const mapStyle = [
     {
-      featureType: "all",
       elementType: "geometry",
-      stylers: [
-        {
-          color: "#e8e8e8",
-        },
-      ],
+      stylers: [{ color: "#e5e5e5" }],
     },
     {
-      featureType: "all",
+      elementType: "labels.icon",
+      stylers: [{ visibility: "off" }],
+    },
+    {
       elementType: "labels.text.fill",
-      stylers: [
-        {
-          color: "#444444",
-        },
-      ],
+      stylers: [{ color: "#616161" }],
+    },
+    {
+      elementType: "labels.text.stroke",
+      stylers: [{ color: "#f5f5f5" }],
+    },
+    {
+      featureType: "administrative.country",
+      elementType: "geometry.stroke",
+      stylers: [{ color: "#8b4513" }, { weight: 1.5 }],
+    },
+    {
+      featureType: "administrative.province",
+      elementType: "geometry.stroke",
+      stylers: [{ color: "#8b4513" }, { weight: 1 }],
+    },
+    {
+      featureType: "administrative.locality",
+      elementType: "labels.text.fill",
+      stylers: [{ color: "#3d3d3d" }],
     },
     {
       featureType: "landscape",
-      elementType: "all",
-      stylers: [
-        {
-          color: "#f2f2f2",
-        },
-      ],
+      elementType: "geometry",
+      stylers: [{ color: "#c5e8c5" }],
     },
     {
       featureType: "poi",
-      elementType: "all",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
+      elementType: "geometry",
+      stylers: [{ color: "#a0d6a0" }],
+    },
+    {
+      featureType: "poi.park",
+      elementType: "geometry",
+      stylers: [{ color: "#7fbf7f" }],
     },
     {
       featureType: "road",
-      elementType: "all",
-      stylers: [
-        {
-          saturation: -100,
-        },
-        {
-          lightness: 45,
-        },
-      ],
-    },
-    {
-      featureType: "road.highway",
-      elementType: "all",
-      stylers: [
-        {
-          visibility: "simplified",
-        },
-      ],
+      elementType: "geometry",
+      stylers: [{ color: "#ffffff" }],
     },
     {
       featureType: "road.arterial",
-      elementType: "labels.icon",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
+      elementType: "labels.text.fill",
+      stylers: [{ color: "#757575" }],
     },
     {
-      featureType: "transit",
-      elementType: "all",
-      stylers: [
-        {
-          visibility: "off",
-        },
-      ],
+      featureType: "road.highway",
+      elementType: "geometry",
+      stylers: [{ color: "#dadada" }],
+    },
+    {
+      featureType: "road.highway",
+      elementType: "labels.text.fill",
+      stylers: [{ color: "#616161" }],
+    },
+    {
+      featureType: "road.local",
+      elementType: "labels.text.fill",
+      stylers: [{ color: "#9e9e9e" }],
+    },
+    {
+      featureType: "transit.line",
+      elementType: "geometry",
+      stylers: [{ color: "#e5e5e5" }],
+    },
+    {
+      featureType: "transit.station",
+      elementType: "geometry",
+      stylers: [{ color: "#eeeeee" }],
     },
     {
       featureType: "water",
-      elementType: "all",
-      stylers: [
-        {
-          color: "#b4d4e1",
-        },
-        {
-          visibility: "on",
-        },
-      ],
+      elementType: "geometry",
+      stylers: [{ color: "#b3d4fc" }],
+    },
+    {
+      featureType: "water",
+      elementType: "labels.text.fill",
+      stylers: [{ color: "#9e9e9e" }],
     },
   ];
 
   return (
-    <ScrollView style={tw`flex-1 bg-gray-900`}>
-      <View style={tw`bg-gray-800 rounded-lg shadow-lg m-4 p-4`}>
-        <Text style={tw`text-2xl font-bold mb-2 text-gray-100`}>
+    <ScrollView className="flex-1 bg-gray-900">
+      <View className="bg-gray-800 rounded-lg shadow-lg m-4 p-4">
+        <Text className="text-2xl font-bold mb-2 text-gray-100">
           {earthquake.place}
         </Text>
-        <View style={tw`flex-row justify-between mb-2`}>
-          <Text style={tw`text-gray-400`}>
+        <View className="flex-row justify-between mb-2">
+          <Text className="text-gray-400">
             <Ionicons name="calendar-outline" size={16} color="#9CA3AF" />{" "}
             {earthquake.date}
           </Text>
-          <Text style={tw`text-gray-400`}>
+          <Text className="text-gray-400">
             <Ionicons name="time-outline" size={16} color="#9CA3AF" />{" "}
             {earthquake.hour}
           </Text>
         </View>
-        <View style={tw`flex-row justify-between mb-4`}>
-          <Text style={tw`text-lg text-gray-300`}>
+        <View className="flex-row justify-between mb-4">
+          <Text className="text-lg text-gray-300">
             <Ionicons name="pulse-outline" size={20} color="#60A5FA" />{" "}
             Magnitud: {earthquake.magnitude}
           </Text>
-          <Text style={tw`text-lg text-gray-300`}>
+          <Text className="text-lg text-gray-300">
             <Ionicons name="arrow-down-outline" size={20} color="#60A5FA" />{" "}
             Profundidad: {earthquake.depth}
           </Text>
         </View>
         <Image
           source={{ uri: earthquake.image }}
-          style={tw`w-full h-64 rounded-lg mb-4`}
+          className="w-full h-64 rounded-lg mb-4"
           resizeMode="cover"
         />
         <TouchableOpacity
-          style={tw`bg-blue-600 py-2 px-4 rounded-full self-start`}
+          className="bg-blue-600 py-2 px-4 rounded-full self-start"
           onPress={() => Linking.openURL(earthquake.info)}
         >
-          <Text style={tw`text-white font-semibold`}>Más Información</Text>
+          <Text className="text-white font-semibold">Más Información</Text>
         </TouchableOpacity>
       </View>
-      <View style={tw`bg-gray-800 rounded-lg shadow-lg m-4 p-4`}>
-        <Text style={tw`text-xl font-bold mb-2 text-gray-100`}>
+      <View className="bg-gray-800 rounded-lg shadow-lg m-4 p-4">
+        <Text className="text-xl font-bold mb-2 text-gray-100">
           Ubicación del Sismo
         </Text>
-        <View style={tw`w-full h-80 rounded-lg overflow-hidden`}>
+        <View className="w-full h-80 rounded-lg overflow-hidden">
           <MapView
             provider={PROVIDER_GOOGLE}
             style={tw`w-full h-full`}
@@ -218,9 +222,7 @@ const UltimoSismo = () => {
               title={earthquake.place}
               description={`Magnitud: ${earthquake.magnitude}`}
             >
-              <View
-                style={tw`bg-red-500 p-2 rounded-full border-2 border-white`}
-              >
+              <View className="bg-red-500 p-2 rounded-full border-2 border-white">
                 <Ionicons name="location" size={24} color="white" />
               </View>
             </Marker>
