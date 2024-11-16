@@ -16,16 +16,30 @@
       "supportsTablet": true
     },
     "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBXUmTUJ7e10K6d_-OW1l-Ch9cyEDMA9QM"
+          }
+          },
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/earthalert.jpg",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.nicolasexpo.earthalertfinal"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "41766d23-308a-4868-8d4a-4e81b5cf7960"
+      }
+    }
   }
 }
