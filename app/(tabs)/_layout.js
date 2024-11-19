@@ -9,8 +9,11 @@ import {
   New,
   History,
   AlertIcon,
+  ContactIcon,
 } from "../../components/Icons";
 import { View, Text } from "react-native";
+// eslint-disable-next-line no-unused-vars
+import { Ionicons } from "@expo/vector-icons";
 
 const TabBarIcon = ({ Icon, color, label }) => (
   <View className="items-center justify-center">
@@ -86,21 +89,31 @@ export default function TabsLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="about"
-        options={{
-          title: "Sobre",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon Icon={InfoIcon} color={color} label="Sobre" />
-          ),
-        }}
-      />
+
       <Tabs.Screen
         name="enviaralerta"
         options={{
           title: "Alerta",
           tabBarIcon: ({ color }) => (
             <TabBarIcon Icon={AlertIcon} color={color} label="Alerta" />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="contactos"
+        options={{
+          title: "Contactos",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon Icon={ContactIcon} color={color} label="Contactos" />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="about"
+        options={{
+          title: "Sobre",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon Icon={InfoIcon} color={color} label="Sobre" />
           ),
         }}
       />

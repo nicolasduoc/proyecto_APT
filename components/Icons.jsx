@@ -1,6 +1,7 @@
 import { FontAwesome } from "@expo/vector-icons";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Entypo from "@expo/vector-icons/Entypo";
+import { Ionicons } from "@expo/vector-icons";
 
 export const HomeIcon = ({ color }) => {
   return <FontAwesome name="home" size={24} color={color} />;
@@ -29,3 +30,7 @@ export const History = ({ color }) => {
 export const AlertIcon = ({ color }) => {
   return <FontAwesome name="warning" size={24} color={color} />;
 };
+
+export const ContactIcon = ({ color, size }) => (
+  <Ionicons name="people-outline" size={size} color={color} />
+);

@@ -38,10 +38,18 @@ export function AuthProvider({ children }) {
       const data = await response.json();
 
       if (data.success) {
+        console.log("ID de usuario recibido:", data.userId);
         setUser({
           email,
           userId: data.userId,
         });
+        await AsyncStorage.setItem(
+          "user",
+          JSON.stringify({
+            email,
+            userId: data.userId,
+          }),
+        );
         return { success: true };
       } else {
         return { success: false, error: data.message };
