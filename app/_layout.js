@@ -44,6 +44,7 @@ function RootLayoutNav() {
     } else if (user && inAuthGroup) {
       router.replace("/");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, segments, loading]);
 
   if (loading) {

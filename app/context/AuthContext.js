@@ -37,15 +37,14 @@ export function AuthProvider({ children }) {
 
       const data = await response.json();
 
-      if (response.ok) {
-        await AsyncStorage.setItem("user", JSON.stringify(data));
-        setUser(data);
+      if (data.success) {
+        setUser({
+          email,
+          userId: data.userId,
+        });
         return { success: true };
       } else {
-        return {
-          success: false,
-          error: data.message || "Error al iniciar sesión",
-        };
+        return { success: false, error: data.message };
       }
     } catch (error) {
       return { success: false, error: "Error de conexión" };

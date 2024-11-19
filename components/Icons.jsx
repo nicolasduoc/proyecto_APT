@@ -25,3 +25,7 @@ export const New = ({ color }) => {
 export const History = ({ color }) => {
   return <FontAwesome name="history" size={24} color={color} />;
 };
+
+export const AlertIcon = ({ color }) => {
+  return <FontAwesome name="warning" size={24} color={color} />;
+};

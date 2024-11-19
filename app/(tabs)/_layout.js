@@ -8,6 +8,7 @@ import {
   EarthIcon,
   New,
   History,
+  AlertIcon,
 } from "../../components/Icons";
 import { View, Text } from "react-native";
 
@@ -91,6 +92,15 @@ export default function TabsLayout() {
           title: "Sobre",
           tabBarIcon: ({ color }) => (
             <TabBarIcon Icon={InfoIcon} color={color} label="Sobre" />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="enviaralerta"
+        options={{
+          title: "Alerta",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon Icon={AlertIcon} color={color} label="Alerta" />
           ),
         }}
       />
