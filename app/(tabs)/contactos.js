@@ -8,17 +8,20 @@ import {
   FlatList,
   ActivityIndicator,
   Alert,
+  Linking,
 } from "react-native";
 import { useAuth } from "../context/AuthContext";
 import { Ionicons } from "@expo/vector-icons";
+import * as Location from "expo-location";
 
 const ContactosEmergencia = () => {
   const { user } = useAuth();
   const [nombre, setNombre] = useState("");
-  const [numero, setNumero] = useState("");
+  const [numero, setNumero] = useState("+569");
   const [contactos, setContactos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [loadingWhatsApp, setLoadingWhatsApp] = useState(null);
 
   const obtenerContactos = async () => {
     try {
@@ -53,17 +56,27 @@ const ContactosEmergencia = () => {
 
   const validarNumero = (numero) => {
     const numeroLimpio = numero.replace(/\D/g, "");
-    return numeroLimpio.length >= 8 && numeroLimpio.length <= 12;
+    return numeroLimpio.length === 11;
+  };
+
+  const handleNumeroChange = (texto) => {
+    if (!texto.startsWith("+569")) {
+      texto = "+569";
+    }
+
+    if (texto.length <= 12) {
+      setNumero(texto);
+    }
   };
 
   const agregarContacto = async () => {
-    if (!nombre || !numero) {
-      Alert.alert("Error", "Por favor complete todos los campos");
+    if (!nombre.trim()) {
+      Alert.alert("Error", "Por favor ingrese un nombre");
       return;
     }
 
     if (!validarNumero(numero)) {
-      Alert.alert("Error", "Por favor ingrese un número de teléfono válido");
+      Alert.alert("Error", "El número debe tener 8 dígitos después de +569");
       return;
     }
 
@@ -152,6 +165,72 @@ const ContactosEmergencia = () => {
     );
   };
 
+  const handleCall = async (numero) => {
+    try {
+      const numeroLimpio = numero.replace(/\D/g, "");
+      const url = `tel:${numeroLimpio}`;
+      const canOpen = await Linking.canOpenURL(url);
+
+      if (canOpen) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert(
+          "Error",
+          "No se puede realizar la llamada en este dispositivo",
+        );
+      }
+    } catch (error) {
+      Alert.alert("Error", "No se pudo iniciar la llamada");
+    }
+  };
+
+  const handleWhatsApp = async (numero, nombre) => {
+    try {
+      setLoadingWhatsApp(numero);
+
+      const { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status !== "granted") {
+        Alert.alert("Error", "Se necesita permiso para acceder a la ubicación");
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      const { latitude, longitude } = location.coords;
+
+      const mapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+
+      const numeroLimpio = numero.replace(/\D/g, "").replace(/^569/, "");
+
+      const mensaje = encodeURIComponent(
+        `¡Hola ${nombre}! 🚨 Estoy experimentando un sismo en mi ubicación actual.\n\n` +
+          `Mi ubicación aproximada es:\n` +
+          `📍 Latitud: ${latitude.toFixed(6)}\n` +
+          `📍 Longitud: ${longitude.toFixed(6)}\n\n` +
+          `Puedes ver mi ubicación aquí:\n${mapsUrl}\n\n` +
+          `Por favor, mantente en contacto conmigo.`,
+      );
+
+      const url = `whatsapp://send?phone=569${numeroLimpio}&text=${mensaje}`;
+
+      const canOpen = await Linking.canOpenURL(url);
+
+      if (canOpen) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert(
+          "Error",
+          "No se puede abrir WhatsApp. Asegúrate de tener WhatsApp instalado.",
+        );
+      }
+    } catch (error) {
+      Alert.alert("Error", "No se pudo obtener la ubicación o abrir WhatsApp");
+      console.error("Error:", error);
+    } finally {
+      setLoadingWhatsApp(null);
+    }
+  };
+
   const renderContacto = ({ item }) => (
     <View className="bg-gray-800 p-4 mb-4 rounded-lg">
       <View className="flex-row justify-between items-center">
@@ -159,12 +238,31 @@ const ContactosEmergencia = () => {
           <Text className="text-white text-lg font-bold">{item.nombre}</Text>
           <Text className="text-gray-400">{item.numero}</Text>
         </View>
-        <TouchableOpacity
-          onPress={() => eliminarContacto(item.id_contacto)}
-          className="bg-red-600 p-2 rounded-full"
-        >
-          <Ionicons name="trash-outline" size={20} color="white" />
-        </TouchableOpacity>
+        <View className="flex-row">
+          <TouchableOpacity
+            onPress={() => handleWhatsApp(item.numero, item.nombre)}
+            disabled={loadingWhatsApp === item.numero}
+            className="bg-green-500 p-2 rounded-full mr-2"
+          >
+            {loadingWhatsApp === item.numero ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              <Ionicons name="logo-whatsapp" size={20} color="white" />
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleCall(item.numero)}
+            className="bg-blue-600 p-2 rounded-full mr-2"
+          >
+            <Ionicons name="call-outline" size={20} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => eliminarContacto(item.id_contacto)}
+            className="bg-red-600 p-2 rounded-full"
+          >
+            <Ionicons name="trash-outline" size={20} color="white" />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -185,14 +283,19 @@ const ContactosEmergencia = () => {
           value={nombre}
           onChangeText={setNombre}
         />
-        <TextInput
-          className="bg-gray-700 text-white p-3 rounded-lg mb-4"
-          placeholder="Número de teléfono"
-          placeholderTextColor="#9CA3AF"
-          value={numero}
-          onChangeText={setNumero}
-          keyboardType="phone-pad"
-        />
+        <View className="mb-3">
+          <TextInput
+            className="bg-gray-700 text-white p-3 rounded-lg"
+            placeholder="+569XXXXXXXX"
+            placeholderTextColor="#9CA3AF"
+            value={numero}
+            onChangeText={handleNumeroChange}
+            keyboardType="numeric"
+          />
+          <Text className="text-gray-400 text-sm mt-1">
+            Formato: +569 seguido de 8 dígitos
+          </Text>
+        </View>
         <TouchableOpacity
           className={`p-3 rounded-lg ${loading ? "bg-gray-600" : "bg-blue-600"}`}
           onPress={agregarContacto}

@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { Ionicons } from "@expo/vector-icons";
+import * as Location from "expo-location";
 
 const lightMapStyle = [
   {
@@ -50,6 +52,7 @@ export default function EarthquakeMap() {
   const [earthquakes, setEarthquakes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentLocation, setCurrentLocation] = useState(null);
 
   const fetchEarthquakes = useCallback(async () => {
     try {
@@ -62,7 +65,6 @@ export default function EarthquakeMap() {
       } else {
         setError("No se pudieron obtener los datos de sismos recientes");
       }
-      // eslint-disable-next-line no-unused-vars
     } catch (error) {
       setError("Error al cargar los datos de sismos");
     } finally {
@@ -70,9 +72,31 @@ export default function EarthquakeMap() {
     }
   }, []);
 
+  const getCurrentLocation = useCallback(async () => {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setError("Se requiere permiso para acceder a la ubicación");
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      setCurrentLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+    } catch (error) {
+      console.log("Error de ubicación:", error);
+      // No establecemos error aquí para que al menos se muestren los sismos
+    }
+  }, []);
+
   useEffect(() => {
-    fetchEarthquakes();
-  }, [fetchEarthquakes]);
+    const loadData = async () => {
+      await Promise.all([fetchEarthquakes(), getCurrentLocation()]);
+    };
+    loadData();
+  }, [fetchEarthquakes, getCurrentLocation]);
 
   const getMagnitudeColor = (magnitude) => {
     if (magnitude < 4.0) return "#4ade80";
@@ -125,6 +149,25 @@ export default function EarthquakeMap() {
             longitudeDelta: 10,
           }}
         >
+          {currentLocation && (
+            <Marker
+              coordinate={{
+                latitude: currentLocation.latitude,
+                longitude: currentLocation.longitude,
+              }}
+              title="¡Usted está aquí!"
+            >
+              <View
+                style={{
+                  backgroundColor: "#3b82f6",
+                  borderRadius: 5,
+                  padding: 5,
+                }}
+              >
+                <Ionicons name="location" size={10} color="white" />
+              </View>
+            </Marker>
+          )}
           {earthquakes.map((quake, index) => (
             <Marker
               key={index}
