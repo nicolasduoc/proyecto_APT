@@ -27,6 +27,8 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     try {
+      console.log("Intentando login con:", { email });
+
       const response = await fetch("https://vortexcode.cl/api/auth/login", {
         method: "POST",
         headers: {
@@ -35,27 +37,34 @@ export function AuthProvider({ children }) {
         body: JSON.stringify({ email, password }),
       });
 
+      console.log("Status code:", response.status);
+
       const data = await response.json();
+      console.log("Respuesta del servidor:", data);
 
       if (data.success) {
-        console.log("ID de usuario recibido:", data.userId);
-        setUser({
+        const userData = {
           email,
           userId: data.userId,
-        });
-        await AsyncStorage.setItem(
-          "user",
-          JSON.stringify({
-            email,
-            userId: data.userId,
-          }),
-        );
+        };
+        console.log("Usuario autenticado:", userData);
+
+        setUser(userData);
+        await AsyncStorage.setItem("user", JSON.stringify(userData));
         return { success: true };
       } else {
-        return { success: false, error: data.message };
+        console.log("Error en login:", data.message);
+        return {
+          success: false,
+          error: data.message || "Credenciales inválidas",
+        };
       }
     } catch (error) {
-      return { success: false, error: "Error de conexión" };
+      console.error("Error de conexión:", error);
+      return {
+        success: false,
+        error: "Error de conexión. Por favor, intenta de nuevo.",
+      };
     }
   };
 

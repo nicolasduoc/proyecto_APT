@@ -25,7 +25,9 @@ export default function Login() {
     setLoading(true);
     setError("");
 
+    console.log("Iniciando login con email:", email);
     const result = await login(email, password);
+    console.log("Resultado del login:", result);
 
     if (!result.success) {
       setError(result.error);
