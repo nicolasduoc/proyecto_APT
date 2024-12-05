@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, ScrollView, Pressable, Image } from "react-native";
 import { Link } from "expo-router";
 import { FontAwesome5, MaterialIcons, Ionicons } from "@expo/vector-icons";
-import logo from "../../assets/earthalert.jpg";
+import logo from "../assets/earthalert.jpg";
 
 const AboutSection = ({ icon, title, content }) => (
   <View className="mb-6 bg-gray-800 rounded-lg p-4">

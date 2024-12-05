@@ -37,6 +37,14 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Permitir a Earth Alert usar tu ubicación."
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/earthalert.jpg",
+          "color": "#ffffff",
+          "sounds": ["default"]
+        }
       ]
     ],
     "extra": {

@@ -3,17 +3,13 @@ import { Tabs } from "expo-router";
 import { BlurView } from "expo-blur";
 import {
   HomeIcon,
-  InfoIcon,
   Map,
   EarthIcon,
   New,
   History,
   AlertIcon,
-  ContactIcon,
 } from "../../components/Icons";
 import { View, Text } from "react-native";
-// eslint-disable-next-line no-unused-vars
-import { Ionicons } from "@expo/vector-icons";
 
 const TabBarIcon = ({ Icon, color, label }) => (
   <View className="items-center justify-center">
@@ -63,6 +59,15 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="enviaralerta"
+        options={{
+          title: "Alerta",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon Icon={AlertIcon} color={color} label="Alerta" />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="sismos"
         options={{
           title: "Sismos",
@@ -77,43 +82,6 @@ export default function TabsLayout() {
           title: "Último",
           tabBarIcon: ({ color }) => (
             <TabBarIcon Icon={New} color={color} label="Último" />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="sismoshistorico"
-        options={{
-          title: "Historico",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon Icon={History} color={color} label="Historico" />
-          ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="enviaralerta"
-        options={{
-          title: "Alerta",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon Icon={AlertIcon} color={color} label="Alerta" />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="contactos"
-        options={{
-          title: "Contactos",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon Icon={ContactIcon} color={color} label="Contactos" />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="about"
-        options={{
-          title: "Sobre",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon Icon={InfoIcon} color={color} label="Sobre" />
           ),
         }}
       />

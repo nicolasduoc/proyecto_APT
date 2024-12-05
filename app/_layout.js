@@ -5,6 +5,8 @@ import { useRouter, useSegments } from "expo-router";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { useEffect } from "react";
 import logo from "../assets/earthalert.jpg";
+import { Drawer } from "expo-router/drawer";
+import { DrawerContent } from "../components/Drawer";
 
 // Definimos el componente HeaderRight
 const HeaderRight = () => {
@@ -56,22 +58,40 @@ function RootLayoutNav() {
   }
 
   return (
-    <Stack
+    <Drawer
       screenOptions={{
         headerStyle: {
           backgroundColor: "#1F2937",
         },
-        headerTitle: "",
-        headerLeft: () => (
-          <View className="flex-row items-center">
-            <Image source={logo} borderRadius={25} className="w-10 h-10 mr-4" />
-            <Text className="text-white font-bold text-lg">EarthAlert</Text>
-          </View>
-        ),
         headerTintColor: "#fff",
-        headerRight: segments[0] !== "auth" ? () => <HeaderRight /> : undefined,
+        drawerStyle: {
+          backgroundColor: "#111827",
+        },
       }}
-    />
+      drawerContent={(props) => <DrawerContent {...props} />}
+    >
+      <Drawer.Screen
+        name="(tabs)"
+        options={{
+          headerStyle: {
+            backgroundColor: "#1F2937",
+          },
+          headerTitle: "",
+          headerLeft: () => (
+            <View className="flex-row items-center">
+              <Image
+                source={logo}
+                borderRadius={25}
+                className="w-10 h-10 mr-4"
+              />
+              <Text className="text-white font-bold text-lg">EarthAlert</Text>
+            </View>
+          ),
+          headerTintColor: "#fff",
+          headerRight: () => <HeaderRight />,
+        }}
+      />
+    </Drawer>
   );
 }
 
